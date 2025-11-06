@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Abra no navegador — Landing</title>
+  <meta name="description" content="Abra no navegador e toque em Abrir Telegram" />
+  <style>
+    :root{
+      --bg:#0b0b0b;
+      --card:#0f0f11;
+      --accent:#e03131;
+      --muted:#9aa0a6;
+      --radius:14px;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    html,body{height:100%}
+    body{
+      margin:0;
+      background:linear-gradient(180deg,#070707 0%, #111117 100%);
+      color:#fff;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:24px;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+    .wrap{
+      max-width:520px;
+      width:100%;
+      background:var(--card);
+      border-radius:16px;
+      padding:28px;
+      box-shadow:0 10px 30px rgba(2,6,23,0.6);
+      text-align:center;
+    }
+    .logo{
+      width:84px;
+      height:84px;
+      border-radius:12px;
+      display:inline-grid;
+      place-items:center;
+      background:linear-gradient(135deg,#222 0%, #111 100%);
+      margin-bottom:18px;
+      font-weight:700;
+      font-size:18px;
+      color:var(--muted);
+    }
+    h1{margin:0 0 10px;font-size:20px}
+    p.lead{margin:0 0 18px;color:var(--muted);line-height:1.4}
+    .instruction{
+      background:rgba(255,255,255,0.02);
+      border-radius:12px;
+      padding:14px;
+      margin-bottom:18px;
+      text-align:left;
+      color:var(--muted);
+      font-size:14px;
+    }
+    .instruction b{color:#fff}
+    .preview{
+      width:100%;
+      height:180px;
+      border-radius:10px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0.01) 100%);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:var(--muted);
+      margin-bottom:18px;
+      font-size:13px;
+    }
+    .btn{
+      display:block;
+      width:100%;
+      text-decoration:none;
+      background:var(--accent);
+      color:#fff;
+      padding:16px;
+      border-radius:12px;
+      font-weight:700;
+      font-size:16px;
+      box-shadow:0 6px 18px rgba(224,49,49,0.25);
+      border:0;
+      cursor:pointer;
+    }
+    .hint{margin-top:12px;color:var(--muted);font-size:13px}
+    .small{font-size:12px;color:#7e8488;margin-top:10px}
+    footer{margin-top:18px;color:var(--muted);font-size:12px}
+    @media (max-width:420px){
+      .wrap{padding:18px;border-radius:12px}
+      .preview{height:160px}
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap" role="main" aria-labelledby="title">
+    <div class="logo" aria-hidden="true">
+  <img src="modelo.jpg" alt="Logo" style="
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    object-fit: cover;
+  ">
+</div>
+    <h1 id="title">Abra no navegador</h1>
+    <p class="lead">Siga os passos abaixo para abrir corretamente no navegador e depois toque em <b>ABRIR TELEGRAM</b>.</p>
+
+    <div class="instruction" id="instructions">
+      <ol style="margin:0 0 0 18px;padding:0">
+        <li><b>Toque nos três pontos</b> (ou menu do app) no canto do player/browser embutido;</li>
+        <li><b>Escolha “Abrir no navegador”</b> ou “Abrir em Safari/Chrome”;</li>
+        <li>Depois volte aqui e toque em <b>ABRIR TELEGRAM</b>.</li>
+      </ol>
+    </div>
+
+<div class="preview" id="preview">
+  <img src="b3ZTH.gif" alt="Tutorial animado" style="
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 10px;
+  display: block;
+">
+</div>
+
+
+    <a id="openBtn" class="btn" href="#" rel="noopener noreferrer" target="_blank">ABRIR TELEGRAM</a>
+
+    <div class="hint" id="hint"></div>
+    <div class="small">Redirecionamento seguro • Nunca armazenamos dados pessoais.</div>
+    <footer>Se estiver com problemas, abra este link no navegador do seu celular.</footer>
+  </main>
+
+  <script>
+    (function(){
+      // === CONFIGURE AQUI: substitua pelo link do seu Telegram (ou outro) ===
+      const TELEGRAM_LINK = "https://t.me/SEU_CANAL_OU_USUARIO";
+      // =====================================================================
+      const openBtn = document.getElementById('openBtn');
+      const hint = document.getElementById('hint');
+
+      // define o link no botão
+      openBtn.href = TELEGRAM_LINK;
+
+      // detecta se está embutido em webview (apps) e mostra instrução extra
+      function isInWebView(){
+        // heurística simples por userAgent + navigator
+        const ua = navigator.userAgent || '';
+        const inApp = /FBAN|FB_IOS|Instagram|Line|FBAV|Twitter|WhatsApp|Snapchat|Pinterest|LinkedIn|Telegram/i.test(ua);
+        // se for um browser normal de celular (Safari/Chrome) então false
+        return inApp && !/CriOS|Chrome/i.test(ua);
+      }
+
+      if(isInWebView()){
+        hint.innerHTML = "Parece que você abriu esse link dentro de outro app. Toque no menu do app e escolha <b>Abrir no navegador</b> para que o botão Telegram funcione corretamente.";
+      } else {
+        hint.innerHTML = "Se o botão não abrir o Telegram, pressione e segure o botão e copie o link para colar no navegador.";
+      }
+
+      // melhora UX: se estiver em desktop, altera texto
+      if(window.innerWidth > 900){
+        document.getElementById('title').textContent = "Abra no navegador (desktop)";
+        document.querySelector('.lead').textContent = "Toque no botão abaixo para abrir o Telegram (ou copie o link se preferir).";
+      }
+
+      // optional: bloquear navegação automática em some crawlers
+      // small safety: sanitize link (basic)
+      try {
+        const url = new URL(TELEGRAM_LINK);
+      } catch(e){
+        openBtn.href = "#";
+        openBtn.textContent = "Link inválido";
+        openBtn.disabled = true;
+        hint.textContent = "Link de destino inválido. Edite TELEGRAM_LINK no HTML.";
+      }
+    })();
+  </script>
+</body>
+</html>
